@@ -1,0 +1,231 @@
+<Window x:Class="MaritimePlatform.App.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        x:Name="ShellWindowRoot"
+        Title="Maritime Eco-Regulation &amp; Voyage Management Platform (IMO DCS / EU MRV / CII / EU ETS)"
+        Width="1440"
+        Height="860"
+        MinWidth="1280"
+        MinHeight="720"
+        WindowStartupLocation="CenterScreen"
+        Background="#FFFFFF">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/MaritimePlatform.UI.Common;component/Themes/ThemeColors.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+
+    <Grid Background="#FFFFFF">
+        <Grid.ColumnDefinitions>
+            <!-- Left Module Navigation Rail (76px) -->
+            <ColumnDefinition Width="78"/>
+            <!-- Main Viewport -->
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <!-- Top Global Vessel & Year Filter Bar -->
+            <RowDefinition Height="58"/>
+            <!-- Active Module Content Area -->
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Top-Left Brand Logo Cell -->
+        <Border Grid.Row="0"
+                Grid.Column="0"
+                Background="#F8F9FA"
+                BorderBrush="#E0E0E0"
+                BorderThickness="0,0,1,1">
+            <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                <Border Background="#F37321" CornerRadius="6" Padding="8,3" HorizontalAlignment="Center">
+                    <TextBlock Text="ECO" FontSize="12" FontWeight="ExtraBold" Foreground="#FFFFFF"/>
+                </Border>
+                <TextBlock Text="MARITIME" FontSize="9" FontWeight="Bold" Foreground="#757575" Margin="0,2,0,0" HorizontalAlignment="Center"/>
+            </StackPanel>
+        </Border>
+
+        <!-- Top Header Filter Bar: [선박 선택: MV PIONEER (IMO 9123456)] [연도: < 2023 >] [사용자: Officer] -->
+        <Border Grid.Row="0"
+                Grid.Column="1"
+                Background="#F8F9FA"
+                BorderBrush="#E0E0E0"
+                BorderThickness="0,0,0,1"
+                Padding="20,0">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="24"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <!-- Vessel Selector -->
+                <StackPanel Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Center">
+                    <TextBlock Text="선박 선택:"
+                               FontSize="12.5"
+                               FontWeight="SemiBold"
+                               Foreground="#757575"
+                               VerticalAlignment="Center"
+                               Margin="0,0,8,0"/>
+                    <ComboBox ItemsSource="{Binding FleetVessels}"
+                              SelectedItem="{Binding SelectedVessel}"
+                              DisplayMemberPath="DisplayLabel"
+                              Width="250"
+                              Height="32"
+                              VerticalContentAlignment="Center"
+                              FontWeight="Bold"
+                              Foreground="#333333"
+                              Background="#FFFFFF"
+                              BorderBrush="#E0E0E0"/>
+                </StackPanel>
+
+                <!-- Year Stepper: < 2023 > -->
+                <StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Center">
+                    <TextBlock Text="연도:"
+                               FontSize="12.5"
+                               FontWeight="SemiBold"
+                               Foreground="#757575"
+                               VerticalAlignment="Center"
+                               Margin="0,0,8,0"/>
+                    <Border Background="#FFFFFF"
+                            BorderBrush="#E0E0E0"
+                            BorderThickness="1"
+                            CornerRadius="5"
+                            Height="32">
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                            <Button Command="{Binding PrevYearCommand}"
+                                    Content="◀"
+                                    Width="28"
+                                    Background="Transparent"
+                                    BorderThickness="0"
+                                    Foreground="#757575"
+                                    Cursor="Hand"
+                                    FontWeight="Bold"/>
+                            <TextBlock Text="{Binding SelectedYear}"
+                                       FontSize="13.5"
+                                       FontWeight="Bold"
+                                       Foreground="#F37321"
+                                       VerticalAlignment="Center"
+                                       Margin="10,0"/>
+                            <Button Command="{Binding NextYearCommand}"
+                                    Content="▶"
+                                    Width="28"
+                                    Background="Transparent"
+                                    BorderThickness="0"
+                                    Foreground="#757575"
+                                    Cursor="Hand"
+                                    FontWeight="Bold"/>
+                        </StackPanel>
+                    </Border>
+                </StackPanel>
+
+                <!-- Right User & Certification Badge -->
+                <StackPanel Grid.Column="4" Orientation="Horizontal" VerticalAlignment="Center">
+                    <Border Background="#FFF6EE"
+                            BorderBrush="#F89B6C"
+                            BorderThickness="1"
+                            CornerRadius="4"
+                            Padding="10,4"
+                            Margin="0,0,12,0">
+                        <TextBlock Text="SEEMP Part II &amp; III CoC Active"
+                                   FontSize="11.5"
+                                   FontWeight="SemiBold"
+                                   Foreground="#F37321"/>
+                    </Border>
+                    <Border Background="#FFFFFF"
+                            BorderBrush="#E0E0E0"
+                            BorderThickness="1"
+                            CornerRadius="4"
+                            Padding="10,4">
+                        <TextBlock Text="사용자: Chief Compliance Officer"
+                                   FontSize="12"
+                                   FontWeight="Medium"
+                                   Foreground="#333333"/>
+                    </Border>
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <!-- Left Navigation Rail: [DCS] IMO DCS / [MRV] EU MRV / [CII] CII / [ETS] EU ETS -->
+        <Border Grid.Row="1"
+                Grid.Column="0"
+                Background="#F8F9FA"
+                BorderBrush="#E0E0E0"
+                BorderThickness="0,0,1,0"
+                Padding="0,12,0,12">
+            <ItemsControl ItemsSource="{Binding Modules}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Button Command="{Binding DataContext.NavigateModuleCommand, ElementName=ShellWindowRoot}"
+                                CommandParameter="{Binding}"
+                                Cursor="Hand"
+                                Margin="6,4">
+                            <Button.Template>
+                                <ControlTemplate TargetType="Button">
+                                    <Grid>
+                                        <Border x:Name="NavCard"
+                                                Background="Transparent"
+                                                CornerRadius="6"
+                                                Padding="6,10">
+                                            <StackPanel HorizontalAlignment="Center">
+                                                <Border x:Name="BadgeBox"
+                                                        Background="#FFFFFF"
+                                                        BorderBrush="#E0E0E0"
+                                                        BorderThickness="1"
+                                                        CornerRadius="4"
+                                                        Padding="6,3"
+                                                        HorizontalAlignment="Center"
+                                                        Margin="0,0,0,4">
+                                                    <TextBlock x:Name="BadgeLabel"
+                                                               Text="{Binding ShortBadge}"
+                                                               FontSize="11"
+                                                               FontWeight="Bold"
+                                                               Foreground="#333333"/>
+                                                </Border>
+                                                <TextBlock x:Name="TitleLabel"
+                                                           Text="{Binding DisplayName}"
+                                                           FontSize="10.5"
+                                                           FontWeight="Medium"
+                                                           Foreground="#757575"
+                                                           TextAlignment="Center"
+                                                           TextWrapping="Wrap"/>
+                                            </StackPanel>
+                                        </Border>
+                                        <!-- Left active module indicator (#F37321) -->
+                                        <Border x:Name="ActiveBar"
+                                                Width="4"
+                                                HorizontalAlignment="Left"
+                                                CornerRadius="2"
+                                                Margin="0,6"
+                                                Background="Transparent"/>
+                                    </Grid>
+                                    <ControlTemplate.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter TargetName="NavCard" Property="Background" Value="#FFF6EE"/>
+                                        </Trigger>
+                                        <DataTrigger Binding="{Binding IsActive}" Value="True">
+                                            <Setter TargetName="NavCard" Property="Background" Value="#FFF6EE"/>
+                                            <Setter TargetName="BadgeBox" Property="Background" Value="#F37321"/>
+                                            <Setter TargetName="BadgeBox" Property="BorderBrush" Value="#F37321"/>
+                                            <Setter TargetName="BadgeLabel" Property="Foreground" Value="#FFFFFF"/>
+                                            <Setter TargetName="TitleLabel" Property="Foreground" Value="#F37321"/>
+                                            <Setter TargetName="TitleLabel" Property="FontWeight" Value="Bold"/>
+                                            <Setter TargetName="ActiveBar" Property="Background" Value="#F37321"/>
+                                        </DataTrigger>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </Button.Template>
+                        </Button>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </Border>
+
+        <!-- Main Module Viewport -->
+        <ContentControl Grid.Row="1"
+                        Grid.Column="1"
+                        Content="{Binding CurrentModuleView}"/>
+    </Grid>
+</Window>

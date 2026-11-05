@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net10.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWPF>true</UseWPF>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\MaritimePlatform.Core\MaritimePlatform.Core.csproj" />
+    <ProjectReference Include="..\MaritimePlatform.UI.Common\MaritimePlatform.UI.Common.csproj" />
+    <ProjectReference Include="..\MaritimePlatform.Modules.ImoDcs\MaritimePlatform.Modules.ImoDcs.csproj" />
+  </ItemGroup>
+
+</Project>
