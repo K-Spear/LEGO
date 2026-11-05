@@ -1,0 +1,74 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v10.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v10.0": {
+      "MaritimePlatform.App/1.0.0": {
+        "dependencies": {
+          "MaritimePlatform.Core": "1.0.0",
+          "MaritimePlatform.Modules.ImoDcs": "1.0.0",
+          "MaritimePlatform.UI.Common": "1.0.0"
+        },
+        "runtime": {
+          "MaritimePlatform.App.dll": {}
+        }
+      },
+      "MaritimePlatform.Core/1.0.0": {
+        "runtime": {
+          "MaritimePlatform.Core.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      },
+      "MaritimePlatform.Modules.ImoDcs/1.0.0": {
+        "dependencies": {
+          "MaritimePlatform.Core": "1.0.0",
+          "MaritimePlatform.UI.Common": "1.0.0"
+        },
+        "runtime": {
+          "MaritimePlatform.Modules.ImoDcs.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      },
+      "MaritimePlatform.UI.Common/1.0.0": {
+        "dependencies": {
+          "MaritimePlatform.Core": "1.0.0"
+        },
+        "runtime": {
+          "MaritimePlatform.UI.Common.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      }
+    }
+  },
+  "libraries": {
+    "MaritimePlatform.App/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "MaritimePlatform.Core/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "MaritimePlatform.Modules.ImoDcs/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "MaritimePlatform.UI.Common/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}
